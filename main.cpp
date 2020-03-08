@@ -10,18 +10,14 @@
 #include <vector>
 #include "Game.hpp"
 #include "Case.hpp"
+#include <random>
 
 using namespace std;
 
-void sleep(unsigned int mseconds)
-{
-    clock_t goal = mseconds + clock();
-    while (goal > clock());
-}
 
 void print_header() {
     cout << "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" << endl;
-    cout << "-*-*-*-*-*-*-*-*-*-*-*{DEAL or no DEAL}*-*-*-*-*-*-*-*-*-*-" << endl;
+    cout << "-*-*-*-*-*-*-*-*-*-*{DEAL or no DEAL}*-*-*-*-*-*-*-*-*-*-*-" << endl;
     cout << "*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*" << endl;
 }
 
@@ -32,21 +28,20 @@ void print_status() {
     {
         if (timer == 1) {
             cout << ">";
-            sleep(10000);
+            //sleep(10000);
         }
         else {
             cout << "==";
         }
-        sleep(200000);
+        //sleep(200000);
         --timer;
     }
     cout << "}]" << endl;
-    cout << endl;
-    sleep(200000);
+    //sleep(200000);
 }
 
 int main() {
-    bool endGame = false;
+
     int CaseNumber;
     
     print_header();
@@ -54,18 +49,24 @@ int main() {
     
     Game game = Game();
     game.construct_suite();
-    game.print_suite();
-    
-    cout << "please enter a case to hold: ";
-    cin >> CaseNumber;
-    game.hold_case(CaseNumber);
-    while (endGame == false) {
+    game.hold_case();
+    game.construct_wall();
+    //game.print_suite_vals();
+    //game.print_wall();
+    //game.print_suite_vals();
+    while (game.get_status() == false) {
         game.print_suite();
-        cout << "please enter a case to open: ";
-        cin >> CaseNumber;
-        game.open_case(CaseNumber);
-        
-        
-        endGame = game.get_terminator();
-    }
+        game.input_case_handler();
+        game.print_wall();
+        //game.print_suite_vals();
+        if (game.get_modSuite_size() == 5 || game.get_modSuite_size() == 16
+            || game.get_modSuite_size() == 10) {
+            game.call_the_broker();
+        }
+        if (game.get_modSuite_size() == 7 || game.get_modSuite_size() == 11) {
+            game.swap_case();
+            }
+        }
+    game.initiate_ending();
+    
 }

@@ -18,7 +18,7 @@ class Case {
 public:
     Case();
     
-    Case(int case_number, int poss_val);
+    Case(int case_number, std::string poss_val);
     
     std::string construct_case();
     
@@ -28,15 +28,17 @@ public:
     
     int get_caseNumber();
     
-    double get_caseVal();
+    std::string get_caseVal();
     
+    int get_caseIdentifier();
     
     
     
 private:
     std::string caseFace = "null";
     double caseNumber = -1;
-    int caseVal = -1;
+    std::string caseVal;
+    int caseIdentifier = -1;
 };
 
 
