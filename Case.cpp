@@ -30,11 +30,13 @@ int Case::get_caseIdentifier() {
     else if (caseNumber >= 14 && caseNumber < 21) {
         return 3;
     }
+    else if (caseNumber == 27) {
+        return 5;
+    }
     else {
         return 4;
     }
 }
-
 
 void Case::set_caseFace() {
     caseFace = "      ";
